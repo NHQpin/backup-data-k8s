@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quang-nginx-new-image
+  namespace: nhq-pin
+  labels:
+    app: web-nhq
+spec:
+  containers:
+  - name: quang-nginx-nodeport
+    image: nhqhub/nhq-project:9cf07af1
+    ports:
+    - protocol: TCP
+      containerPort: 80

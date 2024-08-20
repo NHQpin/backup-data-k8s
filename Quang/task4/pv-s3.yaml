@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: s3-pv
+  namespace: nhq-pin
+spec:
+  capacity:
+    storage: 1Gi # ignored, required
+  accessModes:
+    - ReadWriteMany # supported options: ReadWriteMany / ReadOnlyMany
+  mountOptions:
+    - allow-delete
+  csi:
+    driver: s3.hn-1.cloud.cmctelecom.vn # required
+    volumeHandle: s3-csi-driver-volume # must be unique
+    volumeAttributes:
+      bucketName: uit-hcm

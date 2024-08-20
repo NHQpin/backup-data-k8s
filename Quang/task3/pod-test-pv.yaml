@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nhq-pod-pvc
+  namespace: nhq-pin
+spec:
+  volumes:
+    - name: nhq-volume
+      persistentVolumeClaim:
+        claimName: nhq-pvc
+  containers:
+  - name: nhq-pod-pvc
+    image: nginx:latest
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: nhq-volume

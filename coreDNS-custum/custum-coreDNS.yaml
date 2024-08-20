@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-custem-coredns
+  namespace: kube-system
+data:
+  # Log all incoming DNS queries.
+  log.include: |
+    log
+  # Private DNS resolution example. Handles FQDN resolutions for *.mydomain.com
+  # Replace <dns-private-ip> with the target IP address.
+  mydomain.server: |
+    nhq.local.:53 {
+      forward . 10.100.182.9
+    }

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    loadbalancer.openstack.org/class: "cmc-loadbalancer-public"
+  name: quang-nginx-new-image
+  namespace: nhq-pin
+  labels:
+    app: lb-nhq
+spec:
+  selector:
+    app: web-nhq
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer

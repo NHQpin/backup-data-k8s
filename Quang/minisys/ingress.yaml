@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:  
+  name: minisys-ingress
+  namespace: nhq-pin
+  annotations:
+    cert-manager.io/issuer: "letsencrypt-prod"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+spec:
+  rules:
+  - host: c1nd3r.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: minisys-service
+            port: 
+              number: 80
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - c1nd3r.me
+    secretName: c1nd3r.me-tls

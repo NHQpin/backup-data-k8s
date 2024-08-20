@@ -1,0 +1,54 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJuaHFodWIiLCJwYXNzd29yZCI6IjIxMzIyMU1vb25AUGluIiwiZW1haWwiOiJuaHEwODEwam9iQGdtYWlsLmNvbSIsImF1dGgiOiJibWh4YUhWaU9qSXhNekl5TVUxdmIyNUFVR2x1In19fQ==
+kind: Secret
+metadata:
+  creationTimestamp: "2024-08-07T08:50:32Z"
+  name: dockerhub-access
+  namespace: nhq-pin
+  resourceVersion: "11259254"
+  uid: 5e08a1c5-7911-446a-b970-7aebaf41c016
+type: kubernetes.io/dockerconfigjson
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: webapp-deployment
+  namespace: nhq-pin
+  labels:
+    app: minisys
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: minisys
+  template:
+    metadata:
+      labels:
+        app: minisys
+    spec:
+      containers:
+      - name: nginx
+        image: nhqhub/nhq-project:web94a3ddcd
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: dockerhub-access
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: minisys-service
+  namespace: nhq-pin
+spec:
+  selector:
+    app: minisys
+  ports:
+  - name: nhq-pin
+    protocol: TCP
+    port: 80
+    targetPort: 80

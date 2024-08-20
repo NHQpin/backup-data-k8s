@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: s3-pv
+spec:
+  capacity:
+    storage: 1200Gi # ignored, required
+  accessModes:
+    - ReadWriteMany # supported options: ReadWriteMany / ReadOnlyMany
+  mountOptions:
+    - allow-delete
+  csi:
+    driver: s3.hn-1.cloud.cmctelecom.vn # required
+    volumeHandle: nhq-pv-s3 # must be unique
+    volumeAttributes:
+      bucketName: harshawaybucket-2
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: s3-claim
+spec:
+  accessModes:
+    - ReadWriteMany # supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: "nhq-pv-s3" # required for static provisioning
+  resources:
+    requests:
+      storage: 100Mi # ignored, required
+  volumeName: s3-pv

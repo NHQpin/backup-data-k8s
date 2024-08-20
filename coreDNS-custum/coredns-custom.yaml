@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-custem-coredns
+  namespace: kube-system
+data:
+  log.override: |
+    log
+  custom.server: |
+    minisys.local.:53 {
+      forward . 10.100.182.9
+    }

@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nhq-role
+  namespace: nhq-pin
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector: {}
+    - namespaceSelector:
+        matchLabels:
+          namespace: default
+  policyTypes:
+  - Ingress

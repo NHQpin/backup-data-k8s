@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-additional-conf
+  namespace: kube-system
+data:
+    extra.conf: |
+      example.abc:53 {
+        hosts {
+          10.100.182.9 example.abc
+          fallthrough
+        }
+      }
